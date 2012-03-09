@@ -23,12 +23,7 @@ var infomaniac = {
         // Triggered when the "Follow" button is pressed.
         onClick: function() {
             var button = window.document.getElementById("follow-button");
-            if (button.label == "Follow") {
-                button.label = "Following";
-            } else if (button.label == "Unfollow" ||
-                       button.label == "Following") {
-                button.label = "Follow";
-            }
+            button.label = button.label == "Follow" ? "Following" : "Follow";
         },
 
         // Triggered when the "Follow" button is hovered upon.
