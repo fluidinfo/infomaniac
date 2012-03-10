@@ -26,6 +26,9 @@ the extension in action:
 
     /usr/bin/firefox -no-remote -P dev
 
+You need to restart the browser whenever you make a change to the
+extension logic before it will be visible.
+
 
 Handling page and tab changes
 -----------------------------

@@ -1,4 +1,6 @@
 var infomaniac = {
+    currentURL: undefined,
+
     // Get the main content window.
     getMainWindow: function() {
         var interfaces = Components.interfaces;
@@ -15,7 +17,6 @@ var infomaniac = {
         var mainWindow = infomaniac.getMainWindow();
         var label = window.document.getElementById("current-url");
         label.value = mainWindow.gBrowser.contentDocument.location.href;
-
         infomaniac.tabs.onLoad();
     },
 
@@ -31,11 +32,10 @@ var infomaniac = {
         onLoad: function() {
             var mainWindow = infomaniac.getMainWindow();
             var container = mainWindow.gBrowser.tabContainer;
-            container.addEventListener("TabSelect", infomaniac.tabs.onSelect,
-                                       false);
-            mainWindow.gBrowser.addEventListener("load",
-                                                 infomaniac.tabs.onPageLoad,
-                                                 false);
+            container.addEventListener(
+                "TabSelect", infomaniac.tabs.onSelect, false);
+            mainWindow.gBrowser.addEventListener(
+                "DOMContentLoaded", infomaniac.tabs.onPageLoad, false);
         },
 
         // Unregister event listeners to stop detecting tab selection
@@ -43,17 +43,23 @@ var infomaniac = {
         onUnload: function() {
             var mainWindow = infomaniac.getMainWindow();
             var container = mainWindow.gBrowser.tabContainer;
-            container.removeEventListener("TabSelect",
-                                          infomaniac.tabs.onSelect, false);
+            container.removeEventListener(
+                "TabSelect", infomaniac.tabs.onSelect, false);
+            mainWindow.gBrowser.removeEventListener(
+                "load", infomaniac.tabs.onPageLoad, false);
         },
 
         // Determine if the sidebar needs to be updated to reflect a new page.
         // Triggered when a new page is loaded.
         onPageLoad: function(evt) {
-            var document = evt.originalTarget;
-            alert(document);
-            if (document.nodeName == "#document") {
-                alert("page-load");
+            if (evt.originalTarget instanceof HTMLDocument) {
+                var mainWindow = infomaniac.getMainWindow();
+                var document = mainWindow.gBrowser.contentDocument;
+                if (infomaniac.currentURL !== document.location.href) {
+                    infomaniac.currentURL = document.location.href;
+                    var label = window.document.getElementById("current-url");
+                    label.value = infomaniac.currentURL;
+                }
             }
         },
 
