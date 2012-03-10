@@ -50,8 +50,8 @@ extension updating its state.  The way it does this is by listening
 for and responding to a combination of events, which are described on
 these pages:
 
-  https://developer.mozilla.org/en/Code_snippets/Tabbed_browser
-  https://developer.mozilla.org/en/Code_snippets/On_page_load
+- https://developer.mozilla.org/en/Code_snippets/Tabbed_browser
+- https://developer.mozilla.org/en/Code_snippets/On_page_load
 
 
 Further information
