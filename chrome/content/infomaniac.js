@@ -7,6 +7,14 @@ var infomaniac = {
         infomaniac.getMainWindow().Firebug.Console.log(message);
     },
 
+    // Open the current page in Fluidinfo, in a new tab.
+    onClickFluidinfoLink: function() {
+        var aboutValue = encodeURIComponent(infomaniac.currentURL);
+        var link = 'http://fluidinfo.com/about/#!/' + aboutValue;
+        var mainWindow = infomaniac.getMainWindow();
+        mainWindow.gBrowser.selectedTab = mainWindow.gBrowser.addTab(link);
+    },
+
     // Register event handlers and initialize the user interface when
     // the extension is loaded.  Triggered when the window's "load"
     // event is fired.
@@ -14,8 +22,11 @@ var infomaniac = {
         infomaniac.fluidinfo = fluidinfo({username: "infomaniac",
                                           password: "secret"});
         var mainWindow = infomaniac.getMainWindow();
+        var currentURL = mainWindow.gBrowser.contentDocument.location.href;
+
         var label = window.document.getElementById("current-url");
-        label.value = mainWindow.gBrowser.contentDocument.location.href;
+        label.value = currentURL;
+
         infomaniac.tabs.onLoad();
     },
 
@@ -137,7 +148,6 @@ var infomaniac = {
             };
 
             var following = infomaniac.follow.cache[url];
-            infomaniac.log("following from cache: " + following);
             if (following !== undefined) {
                 infomaniac.follow.updateButtonLabel(following);
             } else {
@@ -153,12 +163,10 @@ var infomaniac = {
         updateButtonLabel: function(following) {
             var button = window.document.getElementById("follow-button");
             button.label = following ? "Following" : "Follow";
-            infomaniac.log("Updated button to " + button.label);
         },
 
         // Update the follow status in Fluidinfo for the current page.
         updateFollowTag: function(following) {
-            infomaniac.log("current URL: " + infomaniac.currentURL);
             var query = 'fluiddb/about = "' + infomaniac.currentURL + '"';
             if (following) {
                 infomaniac.follow.cache[infomaniac.currentURL] = following;
