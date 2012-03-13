@@ -80,13 +80,20 @@ var infomaniac = {
         // that we can detect tab selection changes.
         onSelect: function() {
             var mainWindow = infomaniac.getMainWindow();
+            var document = mainWindow.gBrowser.contentDocument;
+            infomaniac.currentURL = document.location.href;
+
             var label = window.document.getElementById("current-url");
-            label.value = mainWindow.gBrowser.contentDocument.location.href;
+            label.value = document.location.href;
+
+            infomaniac.follow.syncUI();
         }
     },
 
     // Logic related to the behaviour of the "Follow" button.
     follow: {
+        cache: {},
+
         // Toggle the follow state of the current document.  Triggered
         // when the "Follow" button is pressed.
         onClick: function() {
@@ -121,15 +128,24 @@ var infomaniac = {
         // it.  Triggered when a tab is changed or when a new page is
         // loaded.
         syncUI: function() {
+            var url = infomaniac.currentURL;
+
             var onSuccess = function(result) {
                 var following = (result["infomaniac/follow"] !== undefined);
                 infomaniac.follow.updateButtonLabel(following);
+                infomaniac.follow.cache[url] = following;
             };
 
-            // FIXME Handle failures here. -jkakar
-            infomaniac.fluidinfo.getObject({about: infomaniac.currentURL,
-                                            select: ["infomaniac/follow"],
-                                            onSuccess: onSuccess});
+            var following = infomaniac.follow.cache[url];
+            infomaniac.log("following from cache: " + following);
+            if (following !== undefined) {
+                infomaniac.follow.updateButtonLabel(following);
+            } else {
+                // FIXME Handle failures here. -jkakar
+                infomaniac.fluidinfo.getObject({about: infomaniac.currentURL,
+                                                select: ["infomaniac/follow"],
+                                                onSuccess: onSuccess});
+            }
         },
 
         // Update the "Follow" button label to match the specified
@@ -142,12 +158,15 @@ var infomaniac = {
 
         // Update the follow status in Fluidinfo for the current page.
         updateFollowTag: function(following) {
+            infomaniac.log("current URL: " + infomaniac.currentURL);
             var query = 'fluiddb/about = "' + infomaniac.currentURL + '"';
             if (following) {
+                infomaniac.follow.cache[infomaniac.currentURL] = following;
                 // FIXME Handle failures here. -jkakar
                 infomaniac.fluidinfo.tag({values: {"infomaniac/follow": null},
                                           about: infomaniac.currentURL});
             } else {
+                delete infomaniac.follow.cache[infomaniac.currentURL];
                 // FIXME Handle failures here. -jkakar
                 infomaniac.fluidinfo.del({tags: ["infomaniac/follow"],
                                           where: query});
