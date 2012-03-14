@@ -3,19 +3,21 @@ infomaniac.SidebarView = function() {
     this.activeURL = undefined;
 };
 
-// Initialize the sidebar for the first time.
-infomaniac.SidebarView.prototype.load = function() {
-    infomaniac.log("Initializing view...");
+// Initialize the sidebar for the first time, binding event handlers
+// and performing any other setup that might be needed.
+infomaniac.SidebarView.prototype.bindUI = function() {
+    infomaniac.log("Binding view event handlers...");
 
+    // FIXME We probably ought to add an unbind function to unhook
+    // these event handlers, but doing so is a bit awkward.  In
+    // addition, the logic will probably never be used because the
+    // extension only unloads when the browser shuts down. -jkakar
     var browser = infomaniac.getMainWindow().gBrowser;
     browser.tabContainer.addEventListener(
         "TabSelect", infomaniac.bind(this.onTabChange, this), false);
     browser.addEventListener(
         "DOMContentLoaded", infomaniac.bind(this.onPageLoad, this), false);
-
-    var mainWindow = infomaniac.getMainWindow();
-    var document = mainWindow.gBrowser.contentDocument;
-    infomaniac.controller.sync(document.location.href);
+    infomaniac.controller.sync(browser.contentDocument.location.href);
 };
 
 // Update the sidebar to reflect the details for a new active page or tab.

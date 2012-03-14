@@ -15,5 +15,4 @@ infomaniac.unload = function() {
     infomaniac.log("Stopping extension...");
 };
 
-window.addEventListener("load", infomaniac.load, false);
-window.addEventListener("unload", infomaniac.unload, false);
+window.addEventListener("load", infomaniac.bindUI, false);

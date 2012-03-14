@@ -1,4 +1,4 @@
-// Top-level namespaces contains all code in the extension.  This file
+// Top-level namespace contains all code in the extension.  This file
 // must be included before all others.
 var infomaniac = {
     model: undefined,
