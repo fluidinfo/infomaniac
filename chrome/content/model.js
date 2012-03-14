@@ -9,8 +9,8 @@ infomaniac.WebpageCollection = function(client) {
 // callback with the matching Webpage instance.
 infomaniac.WebpageCollection.prototype.get = function(url, callback) {
     var succeeded = function(result) {
-        infomaniac.log("Received updates from Fluidinfo...");
-        this.pages[url] = new infomaniac.Webpage(url, result, this.client);
+        this.pages[url] = new infomaniac.Webpage(url, result.data,
+                                                 this.client);
         callback(this.pages[url]);
     };
 
@@ -36,7 +36,9 @@ infomaniac.Webpage = function(url, tags, client) {
 // this page and the results of the operation as arguments.
 infomaniac.Webpage.prototype.follow = function(callback) {
     var succeeded = function(result) {
-        this.tags["infomaniac/follow"] = null;
+        for (var path in result.data) {
+            this.tags[path] = result.data[path];
+        }
         infomaniac.log("setting follow to true");
         callback(this, result);
     };

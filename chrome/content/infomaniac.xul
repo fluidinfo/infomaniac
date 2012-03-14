@@ -13,8 +13,6 @@
           type="application/javascript" />
   <script src="chrome://infomaniac/content/model.js"
           type="application/javascript" />
-  <script src="chrome://infomaniac/content/widget.js"
-          type="application/javascript" />
   <script src="chrome://infomaniac/content/view.js"
           type="application/javascript" />
   <script src="chrome://infomaniac/content/controller.js"
