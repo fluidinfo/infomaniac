@@ -5,23 +5,24 @@ infomaniac.SidebarView = function() {
 
 // Initialize the sidebar for the first time.
 infomaniac.SidebarView.prototype.load = function() {
-    infomaniac.log("Initializing sidebar...");
-    var mainWindow = infomaniac.getMainWindow();
-    var currentURL = mainWindow.gBrowser.contentDocument.location.href;
-    this.update(currentURL);
+    infomaniac.log("Initializing view...");
 
-    infomaniac.log("Initializing tab and page state change logic...");
-    var browser = mainWindow.gBrowser;
+    var browser = infomaniac.getMainWindow().gBrowser;
     browser.tabContainer.addEventListener(
         "TabSelect", infomaniac.bind(this.onTabChange, this), false);
     browser.addEventListener(
         "DOMContentLoaded", infomaniac.bind(this.onPageLoad, this), false);
+
+    var mainWindow = infomaniac.getMainWindow();
+    var document = mainWindow.gBrowser.contentDocument;
+    infomaniac.controller.refresh(document.location.href);
 };
 
 // Update the sidebar to reflect the details for a new active page or tab.
-infomaniac.SidebarView.prototype.update = function(url) {
-    infomaniac.log("Activated " + url);
-    window.document.getElementById("current-url").value = url;
+infomaniac.SidebarView.prototype.refresh = function(page) {
+    this.activeURL = page.url;
+    infomaniac.log("Refreshing " + page.url);
+    window.document.getElementById("current-url").value = page.url;
 };
 
 // Respond to a page load event.
@@ -29,13 +30,18 @@ infomaniac.SidebarView.prototype.onPageLoad = function(evt) {
     if (evt.originalTarget instanceof HTMLDocument) {
         var mainWindow = infomaniac.getMainWindow();
         var document = mainWindow.gBrowser.contentDocument;
-        if (infomaniac.currentURL !== document.location.href) {
-            infomaniac.log("Detected page load event...");
+        if (this.activeURL !== document.location.href) {
+            infomaniac.log("Detected page load event: "
+                           + document.location.href);
+            infomaniac.controller.refresh(document.location.href);
         }
     }
 };
 
 // Respond to a tab change event.
 infomaniac.SidebarView.prototype.onTabChange = function() {
-    infomaniac.log("Detected tab change event...");
+    var mainWindow = infomaniac.getMainWindow();
+    var document = mainWindow.gBrowser.contentDocument;
+    infomaniac.log("Detected tab change event: " + document.location.href);
+    infomaniac.controller.refresh(document.location.href);
 };
