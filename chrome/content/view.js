@@ -22,6 +22,7 @@ infomaniac.SidebarView.prototype.load = function() {
 infomaniac.SidebarView.prototype.refresh = function(page) {
     infomaniac.log("Refreshing " + page.url);
     window.document.getElementById("current-url").value = page.url;
+    infomaniac.followButton.syncUI(page);
 };
 
 // Respond to a page load event.
@@ -46,3 +47,4 @@ infomaniac.SidebarView.prototype.onTabChange = function() {
     this.activeURL = document.location.href;
     infomaniac.controller.refresh(document.location.href);
 };
+

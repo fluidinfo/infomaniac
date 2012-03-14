@@ -5,6 +5,7 @@ infomaniac.load = function() {
     infomaniac.model = new infomaniac.WebpageCollection(client);
     infomaniac.controller = new infomaniac.SidebarController();
     infomaniac.view = new infomaniac.SidebarView();
+    infomaniac.followButton = new infomaniac.FollowButton();
     infomaniac.view.load();
 };
 

@@ -13,6 +13,8 @@
           type="application/javascript" />
   <script src="chrome://infomaniac/content/model.js"
           type="application/javascript" />
+  <script src="chrome://infomaniac/content/widget.js"
+          type="application/javascript" />
   <script src="chrome://infomaniac/content/view.js"
           type="application/javascript" />
   <script src="chrome://infomaniac/content/controller.js"
@@ -22,9 +24,9 @@
 
   <vbox flex="1">
     <button id="follow-button" label="Follow"
-            oncommand="infomaniac.follow.onClick();"
-            onmouseout="infomaniac.follow.onMouseOut();"
-            onmouseover="infomaniac.follow.onMouseOver();" />
+            oncommand="infomaniac.followButton.onClick();"
+            onmouseout="infomaniac.followButton.onMouseOut();"
+            onmouseover="infomaniac.followButton.onMouseOver();" />
     <label id="current-url" />
     <spacer flex="1" />
     <label id="link-to-fluidinfo"
