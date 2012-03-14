@@ -15,12 +15,12 @@ infomaniac.SidebarView.prototype.load = function() {
 
     var mainWindow = infomaniac.getMainWindow();
     var document = mainWindow.gBrowser.contentDocument;
-    infomaniac.controller.refresh(document.location.href);
+    infomaniac.controller.sync(document.location.href);
 };
 
 // Update the sidebar to reflect the details for a new active page or tab.
-infomaniac.SidebarView.prototype.refresh = function(page) {
-    infomaniac.log("Refreshing " + page.url);
+infomaniac.SidebarView.prototype.syncUI = function(page) {
+    infomaniac.log("Synchronizing UI for " + page.url);
     window.document.getElementById("current-url").value = page.url;
     infomaniac.followButton.syncUI(page);
 };
@@ -33,7 +33,7 @@ infomaniac.SidebarView.prototype.onPageLoad = function(evt) {
         if (this.activeURL !== document.location.href) {
             infomaniac.log("Detected page load event: "
                            + document.location.href);
-            infomaniac.controller.refresh(document.location.href);
+            infomaniac.controller.sync(document.location.href);
         }
         this.activeURL = document.location.href;
     }
@@ -45,7 +45,7 @@ infomaniac.SidebarView.prototype.onTabChange = function() {
     var document = mainWindow.gBrowser.contentDocument;
     infomaniac.log("Detected tab change event: " + document.location.href);
     this.activeURL = document.location.href;
-    infomaniac.controller.refresh(document.location.href);
+    infomaniac.controller.sync(document.location.href);
 };
 
 
@@ -89,4 +89,17 @@ infomaniac.FollowButton.prototype.syncUI = function(page) {
     infomaniac.log("syncUI/following: " + following);
     var button = window.document.getElementById("follow-button");
     button.label = following ? "Following" : "Follow";
+};
+
+
+// FluidinfoLink provides a link to the object browser.
+infomaniac.FluidinfoLink = function() {};
+
+// Synchronize the user interface with the page state.
+infomaniac.FluidinfoLink.prototype.onClick = function() {
+    var mainWindow = infomaniac.getMainWindow();
+    var document = mainWindow.gBrowser.contentDocument;
+    var link = encodeURIComponent(document.location.href);
+    var targetURL = 'https://fluidinfo.com/about/#!/' + link;
+    mainWindow.gBrowser.selectedTab = mainWindow.gBrowser.addTab(targetURL);
 };

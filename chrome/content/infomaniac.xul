@@ -30,6 +30,6 @@
     <label id="link-to-fluidinfo"
            class="text-link"
            value="More about this page on Fluidinfo..."
-           onclick="infomaniac.onClickFluidinfoLink();" />
+           onclick="infomaniac.fluidinfoLink.onClick();" />
   </vbox>
 </sidebar>

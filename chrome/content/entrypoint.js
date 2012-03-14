@@ -6,6 +6,7 @@ infomaniac.load = function() {
     infomaniac.controller = new infomaniac.SidebarController();
     infomaniac.view = new infomaniac.SidebarView();
     infomaniac.followButton = new infomaniac.FollowButton();
+    infomaniac.fluidinfoLink = new infomaniac.FluidinfoLink();
     infomaniac.view.load();
 };
 

@@ -2,10 +2,10 @@
 infomaniac.SidebarController = function() {};
 
 // Respond to a newly activated page.
-infomaniac.SidebarController.prototype.refresh = function(url) {
+infomaniac.SidebarController.prototype.sync = function(url) {
     var succeeded = function(page) {
         infomaniac.log("Refreshing view for " + page.url);
-        infomaniac.view.refresh(page);
+        infomaniac.view.syncUI(page);
     };
 
     infomaniac.model.get.call(infomaniac.model, url,
@@ -16,7 +16,7 @@ infomaniac.SidebarController.prototype.refresh = function(url) {
 infomaniac.SidebarController.prototype.follow = function(url) {
     // FIXME Handle failures here. -jkakar
     var succeeded = function(page, result) {
-        infomaniac.view.refresh(page);
+        infomaniac.view.syncUI(page);
     };
 
     var loaded = function(page) {
@@ -32,7 +32,7 @@ infomaniac.SidebarController.prototype.follow = function(url) {
 infomaniac.SidebarController.prototype.unfollow = function(url) {
     // FIXME Handle failures here. -jkakar
     var succeeded = function(page, result) {
-        infomaniac.view.refresh(page);
+        infomaniac.view.syncUI(page);
     };
 
     var loaded = function(page) {
