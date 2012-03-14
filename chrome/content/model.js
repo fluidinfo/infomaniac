@@ -1,26 +1,32 @@
 // WebpageCollection contains a cache of pages that we have Fluidinfo
 // data for.
-infomaniac.WebpageCollection = function() {
+infomaniac.WebpageCollection = function(client) {
+    this.client = client;
     this.pages = {};
 };
 
-// Get a Webpage instance for the specified page.  Returns undefined
-// if the page doesn't exist in the collection.
-infomaniac.WebpageCollection.prototype.get = function(url) {
-    return this.pages[url];
-};
+// Get information about the specified URL and fire the specified
+// callback with the matching Webpage instance.
+infomaniac.WebpageCollection.prototype.get = function(url, callback) {
+    var succeeded = function(result) {
+        infomaniac.log("Received updates from Fluidinfo...");
+        this.pages[url] = new infomaniac.Webpage(url, result);
+        callback(this.pages[url]);
+    };
 
-// Load details about the webpage from Fluidinfo, put a new Webpage
-// instance in the page cache and notify the callback with the URL
-// parameter.
-infomaniac.WebpageCollection.prototype.load = function(url, callback) {
-    infomaniac.log("Fetching page data from Fluidinfo: " + url);
-    this.pages[url] = new infomaniac.Webpage(url);
-    callback(url);
+    if (this.pages[url] !== undefined) {
+        infomaniac.log("Notifying callback for " + url);
+        callback(this.pages[url]);
+    } else {
+        infomaniac.log("Calling Fluidinfo...");
+        this.client.getObject({about: url, select: ["infomaniac/follow"],
+                               onSuccess: infomaniac.bind(succeeded, this)});
+    }
 };
 
 
 // Webpage contains the state of an individual webpage.
-infomaniac.Webpage = function(url) {
+infomaniac.Webpage = function(url, tags) {
     this.url = url;
+    this.tags = tags;
 };

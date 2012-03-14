@@ -1,7 +1,8 @@
 // Initialize the extension.
 infomaniac.load = function() {
     infomaniac.log("Initializing extension...");
-    infomaniac.model = new infomaniac.WebpageCollection();
+    var client = fluidinfo({username: "infomaniac", password: "secret"});
+    infomaniac.model = new infomaniac.WebpageCollection(client);
     infomaniac.controller = new infomaniac.SidebarController();
     infomaniac.view = new infomaniac.SidebarView();
     infomaniac.view.load();

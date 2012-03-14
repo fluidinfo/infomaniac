@@ -20,7 +20,6 @@ infomaniac.SidebarView.prototype.load = function() {
 
 // Update the sidebar to reflect the details for a new active page or tab.
 infomaniac.SidebarView.prototype.refresh = function(page) {
-    this.activeURL = page.url;
     infomaniac.log("Refreshing " + page.url);
     window.document.getElementById("current-url").value = page.url;
 };
@@ -35,6 +34,7 @@ infomaniac.SidebarView.prototype.onPageLoad = function(evt) {
                            + document.location.href);
             infomaniac.controller.refresh(document.location.href);
         }
+        this.activeURL = document.location.href;
     }
 };
 
@@ -43,5 +43,6 @@ infomaniac.SidebarView.prototype.onTabChange = function() {
     var mainWindow = infomaniac.getMainWindow();
     var document = mainWindow.gBrowser.contentDocument;
     infomaniac.log("Detected tab change event: " + document.location.href);
+    this.activeURL = document.location.href;
     infomaniac.controller.refresh(document.location.href);
 };
