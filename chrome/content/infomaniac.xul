@@ -9,6 +9,16 @@
           type="application/javascript" />
   <script src="chrome://infomaniac/content/infomaniac.js"
           type="application/javascript" />
+  <script src="chrome://infomaniac/content/browser.js"
+          type="application/javascript" />
+  <script src="chrome://infomaniac/content/model.js"
+          type="application/javascript" />
+  <script src="chrome://infomaniac/content/view.js"
+          type="application/javascript" />
+  <script src="chrome://infomaniac/content/controller.js"
+          type="application/javascript" />
+  <script src="chrome://infomaniac/content/entrypoint.js"
+          type="application/javascript" />
 
   <vbox flex="1">
     <button id="follow-button" label="Follow"
