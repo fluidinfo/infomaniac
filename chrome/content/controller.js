@@ -4,7 +4,6 @@ infomaniac.SidebarController = function() {};
 // Respond to a newly activated page.
 infomaniac.SidebarController.prototype.sync = function(url) {
     var succeeded = function(page) {
-        infomaniac.log("Refreshing view for " + page.url);
         infomaniac.view.syncUI(page);
     };
 
@@ -20,7 +19,6 @@ infomaniac.SidebarController.prototype.follow = function(url) {
     };
 
     var loaded = function(page) {
-        infomaniac.log("Following in Fluidinfo: " + page.url);
         page.follow(succeeded);
     };
 
@@ -36,7 +34,6 @@ infomaniac.SidebarController.prototype.unfollow = function(url) {
     };
 
     var loaded = function(page) {
-        infomaniac.log("Following in Fluidinfo: " + page.url);
         page.unfollow(succeeded);
     };
 

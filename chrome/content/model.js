@@ -15,10 +15,8 @@ infomaniac.WebpageCollection.prototype.get = function(url, callback) {
     };
 
     if (this.pages[url] !== undefined) {
-        infomaniac.log("Notifying callback for " + url);
         callback(this.pages[url]);
     } else {
-        infomaniac.log("Calling Fluidinfo...");
         this.client.getObject({about: url, select: ["infomaniac/follow"],
                                onSuccess: infomaniac.bind(succeeded, this)});
     }
@@ -39,7 +37,6 @@ infomaniac.Webpage.prototype.follow = function(callback) {
         for (var path in result.data) {
             this.tags[path] = result.data[path];
         }
-        infomaniac.log("setting follow to true");
         callback(this, result);
     };
 
@@ -53,7 +50,6 @@ infomaniac.Webpage.prototype.follow = function(callback) {
 infomaniac.Webpage.prototype.unfollow = function(callback) {
     var succeeded = function(result) {
         delete this.tags["infomaniac/follow"];
-        infomaniac.log("setting follow to false");
         callback(this, result);
     };
 

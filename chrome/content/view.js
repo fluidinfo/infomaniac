@@ -6,8 +6,6 @@ infomaniac.SidebarView = function() {
 // Initialize the sidebar for the first time, binding event handlers
 // and performing any other setup that might be needed.
 infomaniac.SidebarView.prototype.bindUI = function() {
-    infomaniac.log("Binding view event handlers...");
-
     // FIXME We probably ought to add an unbind function to unhook
     // these event handlers, but doing so is a bit awkward.  In
     // addition, the logic will probably never be used because the
@@ -22,7 +20,6 @@ infomaniac.SidebarView.prototype.bindUI = function() {
 
 // Update the sidebar to reflect the details for a new active page or tab.
 infomaniac.SidebarView.prototype.syncUI = function(page) {
-    infomaniac.log("Synchronizing UI for " + page.url);
     window.document.getElementById("current-url").value = page.url;
     infomaniac.followButton.syncUI(page);
 };
@@ -32,12 +29,11 @@ infomaniac.SidebarView.prototype.onPageLoad = function(evt) {
     if (evt.originalTarget instanceof HTMLDocument) {
         var mainWindow = infomaniac.getMainWindow();
         var document = mainWindow.gBrowser.contentDocument;
-        if (this.activeURL !== document.location.href) {
-            infomaniac.log("Detected page load event: "
-                           + document.location.href);
+        var currentURL = document.location.href;
+        if (this.activeURL !== currentURL) {
             infomaniac.controller.sync(document.location.href);
         }
-        this.activeURL = document.location.href;
+        this.activeURL = currentURL;
     }
 };
 
@@ -45,9 +41,9 @@ infomaniac.SidebarView.prototype.onPageLoad = function(evt) {
 infomaniac.SidebarView.prototype.onTabChange = function() {
     var mainWindow = infomaniac.getMainWindow();
     var document = mainWindow.gBrowser.contentDocument;
-    infomaniac.log("Detected tab change event: " + document.location.href);
-    this.activeURL = document.location.href;
-    infomaniac.controller.sync(document.location.href);
+    var currentURL = document.location.href;
+    this.activeURL = currentURL;
+    infomaniac.controller.sync(currentURL);
 };
 
 
@@ -88,7 +84,6 @@ infomaniac.FollowButton.prototype.onMouseOut = function() {
 // Synchronize the user interface with the page state.
 infomaniac.FollowButton.prototype.syncUI = function(page) {
     var following = page.tags["infomaniac/follow"] === null;
-    infomaniac.log("syncUI/following: " + following);
     var button = window.document.getElementById("follow-button");
     button.label = following ? "Following" : "Follow";
 };
