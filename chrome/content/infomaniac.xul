@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<?xml-stylesheet href="chrome://global/skin/xul.css" type="text/css" ?>
+<?xml-stylesheet href="chrome://browser/skin/browser.css" type="text/css" ?>
+<!DOCTYPE sidebar SYSTEM "chrome://infomaniac/locale/infomaniac.dtd">
+
+<sidebar id="sbInfomaniac" title="&infomaniac.title;"
+      xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" >
+  <vbox flex="1">
+    <label id="a-label-test" value="I'm a label!" />
+  </vbox>
+</sidebar>
