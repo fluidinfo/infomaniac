@@ -17,7 +17,7 @@ infomaniac.WebpageCollection.prototype.get = function(url, callback) {
     if (this.pages[url] !== undefined) {
         callback(this.pages[url]);
     } else {
-        this.client.getObject({about: url, select: ["infomaniac/follow"],
+        this.client.getObject({about: url, select: ["infomaniac/follows"],
                                onSuccess: infomaniac.bind(succeeded, this)});
     }
 };
@@ -40,7 +40,7 @@ infomaniac.Webpage.prototype.follow = function(callback) {
         callback(this, result);
     };
 
-    this.client.tag({values: {"infomaniac/follow": null},
+    this.client.tag({values: {"infomaniac/follows": null},
                      about: this.url,
                      onSuccess: infomaniac.bind(succeeded, this)});
 };
@@ -49,11 +49,11 @@ infomaniac.Webpage.prototype.follow = function(callback) {
 // this page and the results of the operation as arguments.
 infomaniac.Webpage.prototype.unfollow = function(callback) {
     var succeeded = function(result) {
-        delete this.tags["infomaniac/follow"];
+        delete this.tags["infomaniac/follows"];
         callback(this, result);
     };
 
-    this.client.del({tags: ["infomaniac/follow"],
+    this.client.del({tags: ["infomaniac/follows"],
                      where: 'fluiddb/about = "' + this.url + '"',
                      onSuccess: infomaniac.bind(succeeded, this)});
 };
