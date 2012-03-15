@@ -29,12 +29,10 @@ infomaniac.SidebarController.prototype.follow = function(url) {
 // Unfollow the specified URL.
 infomaniac.SidebarController.prototype.unfollow = function(url) {
     // FIXME Handle failures here. -jkakar
-    var succeeded = function(page, result) {
-        infomaniac.view.syncUI(page);
-    };
-
     var loaded = function(page) {
-        page.unfollow(succeeded);
+        page.unfollow(function(page, result) {
+            infomaniac.view.syncUI(page);
+        });
     };
 
     infomaniac.model.get.call(infomaniac.model, url,
