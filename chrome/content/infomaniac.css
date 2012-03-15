@@ -1,0 +1,7 @@
+#sidebar-infomaniac {
+    font-family: "sans-serif";
+}
+
+#link-to-fluidinfo, #link-to-fluidinfo:visited, #link-to-fluidinfo:hover {
+    color: blue;
+}
