@@ -83,7 +83,7 @@ infomaniac.FollowButton.prototype.onMouseOut = function() {
 
 // Synchronize the user interface with the page state.
 infomaniac.FollowButton.prototype.syncUI = function(page) {
-    var following = page.tags["infomaniac/follow"] === null;
+    var following = page.tags["infomaniac/follows"] === null;
     var button = window.document.getElementById("follow-button");
     button.label = following ? "Following" : "Follow";
 };
