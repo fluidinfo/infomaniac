@@ -16,5 +16,10 @@
             onmouseout="infomaniac.follow.onMouseOut();"
             onmouseover="infomaniac.follow.onMouseOver();" />
     <label id="current-url" />
+    <spacer flex="1" />
+    <label id="link-to-fluidinfo"
+           class="text-link"
+           value="More about this page on Fluidinfo..."
+           onclick="infomaniac.onClickFluidinfoLink();" />
   </vbox>
 </sidebar>
