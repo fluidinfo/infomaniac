@@ -3,9 +3,18 @@
 <?xml-stylesheet href="chrome://browser/skin/browser.css" type="text/css" ?>
 <!DOCTYPE sidebar SYSTEM "chrome://infomaniac/locale/infomaniac.dtd">
 
-<sidebar id="sbInfomaniac" title="&infomaniac.title;"
-      xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" >
+<sidebar id="sidebar-infomaniac" title="&infomaniac.title;"
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" >
+  <script src="chrome://infomaniac/content/fluidinfo.js"
+          type="application/javascript" />
+  <script src="chrome://infomaniac/content/infomaniac.js"
+          type="application/javascript" />
+
   <vbox flex="1">
-    <label id="a-label-test" value="I'm a label!" />
+    <button id="follow-button" label="Follow"
+            oncommand="infomaniac.follow.onClick();"
+            onmouseout="infomaniac.follow.onMouseOut();"
+            onmouseover="infomaniac.follow.onMouseOver();" />
+    <label id="current-url" />
   </vbox>
 </sidebar>
