@@ -22,6 +22,7 @@ infomaniac.WebpageCollection.prototype.get = function(url, callback) {
         this.client.getObject({about: url, select: ["infomaniac/follows",
                                                     "infomaniac/muppet",
                                                     "infomaniac/link",
+                                                    "infomaniac/comment",
                                                     "infomaniac/https-link",
                                                     "infomaniac/like",
                                                     "infomaniac/search-engine",
