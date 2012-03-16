@@ -7,10 +7,9 @@
     <em:name>Fluidinfo</em:name>
     <em:version>0.1</em:version>
     <em:creator>Jamu Kakar</em:creator>
-    <em:description>This Fluidinfo extension makes it easy to follow
-    pages, see info you and others have added to the page you're
-    looking at and jump directly to Fluidinfo to do
-    more.</em:description>
+    <em:description>This extension makes it easy to follow pages, see
+    info you and others have added to the page you're looking at and
+    jump directly to Fluidinfo to do more.</em:description>
     <em:homepageURL>http://fluidinfo.com</em:homepageURL>
     <em:targetApplication>
       <Description>
