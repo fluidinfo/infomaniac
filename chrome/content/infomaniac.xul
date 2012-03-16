@@ -26,7 +26,8 @@
             oncommand="infomaniac.followButton.onClick();"
             onmouseout="infomaniac.followButton.onMouseOut();"
             onmouseover="infomaniac.followButton.onMouseOver();" />
-    <label id="current-url" />
+    <separator class="thin" />
+    <vbox id="page-info" />
     <spacer flex="1" />
     <label id="link-to-fluidinfo"
            class="text-link"

@@ -1,7 +1,18 @@
 #sidebar-infomaniac {
+    background: white;
     font-family: "sans-serif";
 }
 
-#link-to-fluidinfo, #link-to-fluidinfo:visited, #link-to-fluidinfo:hover {
+label.text-link, label.text-link:visited, label.text-link:hover {
     color: blue;
+}
+
+image.avatar {
+    height: 33px;
+    max-height: 33px;
+    width: 33px;
+}
+
+description {
+    max-width: 150px;
 }

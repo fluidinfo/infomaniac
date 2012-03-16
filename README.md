@@ -1,4 +1,4 @@
-Infomanic is a Firefox extension for Fluidinfo.
+Infomaniac is a Firefox extension for Fluidinfo.
 
 
 Introduction

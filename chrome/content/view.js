@@ -20,8 +20,65 @@ infomaniac.SidebarView.prototype.bindUI = function() {
 
 // Update the sidebar to reflect the details for a new active page or tab.
 infomaniac.SidebarView.prototype.syncUI = function(page) {
-    window.document.getElementById("current-url").value = page.url;
+    var document = window.document;
+    // document.getElementById("current-url").value = page.url;
     infomaniac.followButton.syncUI(page);
+
+    var info = document.getElementById("page-info");
+    while (info.firstChild !== null) {
+        info.removeChild(info.firstChild);
+    }
+
+    var tagPaths = [];
+    for (var path in page.tags) {
+        tagPaths.push(path);
+    }
+    tagPaths.sort();
+
+    for (var i = 0; i < tagPaths.length; i++) {
+        var tagPath = tagPaths[i];
+        if (tagPath === "id" || tagPath == "fluiddb/about") {
+            continue;
+        }
+
+        var node = document.createElement("hbox");
+
+        var avatar = document.createElement("hbox");
+        var image = document.createElement("image");
+        image.validate = "always";
+        image.setAttribute("src", "chrome://infomaniac/content/avatar.png");
+        image.setAttribute("class", "avatar");
+        avatar.appendChild(image);
+        node.appendChild(avatar);
+
+        var data = document.createElement("vbox");
+        var tagName = document.createElement("label");
+        tagName.className = "header";
+        var tagValue = document.createElement("label");
+        tagName.appendChild(document.createTextNode(tagPath));
+        var value = page.tags[tagPath];
+        tagValue.appendChild(document.createTextNode(value));
+        if (/^https?:\/\/[^\<\>]+$/i.test(value)) {
+            tagValue.setAttribute("class", "text-link");
+            tagValue.setAttribute("href", value);
+            tagValue.addEventListener("click", function(evt) {
+                var browser = infomaniac.getMainWindow().gBrowser;
+                var value = evt.target.getAttribute("href");
+                infomaniac.log("Opening " + value);
+                browser.selectedTab = browser.addTab(value);
+                evt.stopPropagation();
+                evt.preventDefault();
+            }, false);
+        }
+        data.appendChild(tagName);
+        data.appendChild(tagValue);
+        node.appendChild(data);
+
+        info.appendChild(node);
+        var separator = document.createElement("separator");
+        separator.className = "thin";
+        info.appendChild(separator);
+    }
 };
 
 // Respond to a page load event.
