@@ -3,9 +3,19 @@
 
 <overlay id="infomaniacOverlay"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
+  <script src="chrome://infomaniac/content/infomaniac.js"
+          type="application/javascript" />
+  <script src="chrome://infomaniac/content/contextmenu.js"
+          type="application/javascript" />
+
   <menupopup id="viewSidebarMenu">
     <menuitem key="key_openInfomaniac" observes="viewInfomaniac"  />
   </menupopup>
+
+  <popup id="contentAreaContextMenu">
+    <menuitem label="More on Fluidinfo…"
+              oncommand="infomaniac.contextLink.onClick();" />
+  </popup>
 
   <keyset id="mainKeyset">
     <key id="key_openInfomaniac" command="viewInfomaniac"
@@ -19,7 +29,7 @@
                  autoCheck="false"
                  type="checkbox"
                  group="sidebar"
-                 sidebarurl="chrome://infomaniac/content/infomaniac.xul"
+                 sidebarurl="chrome://infomaniac/content/sidebar.xul"
                  sidebartitle="&infomaniac.title;"
                  oncommand="toggleSidebar('viewInfomaniac');" />
   </broadcasterset>

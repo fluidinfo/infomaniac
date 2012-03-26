@@ -11,9 +11,7 @@
           type="application/javascript" />
   <script src="chrome://infomaniac/content/browser.js"
           type="application/javascript" />
-  <script src="chrome://infomaniac/content/view.js"
-          type="application/javascript" />
-  <script src="chrome://infomaniac/content/entrypoint.js"
+  <script src="chrome://infomaniac/content/sidebar.js"
           type="application/javascript" />
 
   <vbox id="sidebar-container" flex="1">
