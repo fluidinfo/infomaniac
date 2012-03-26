@@ -34,9 +34,7 @@ infomaniac.Webpage = function(url, tags, client) {
 // this page and the results of the operation as arguments.
 infomaniac.Webpage.prototype.follow = function(callback) {
     var succeeded = function(result) {
-        for (var path in result.data) {
-            this.tags[path] = result.data[path];
-        }
+        this.tags["infomaniac/follows"] = null;
         callback(this, result);
     };
 
