@@ -1,6 +1,22 @@
 // SidebarView handles the presentation details for the extension.
 infomaniac.SidebarView = function() {
     this.activeURL = undefined;
+
+    var vbox = window.document.getElementById("sidebar-container");
+    infomaniac.log("width: " + vbox.width);
+    infomaniac.log("height: " + vbox.height);
+    infomaniac.log("scrollHeight: " + vbox.scrollHeight);
+    infomaniac.log("scrollWidth: " + vbox.scrollWidth);
+
+
+    window.top.document.getElementById("sidebar-box").width = "230px";
+    var mainWindow = infomaniac.getMainWindow();
+    mainWindow.document.getElementById("sidebar-splitter").hidden = true;
+    window.top.document.getElementById("sidebar-box").style.borderRight = "1px solid #ebebeb";
+    infomaniac.log(window.document.getElementById("sidebar-content"));
+    // window.document.getElementById("sidebar-content").setAttribute("height", vbox.scrollHeight + "px");
+    // window.document.getElementById("sidebar-content").setAttribute("height", "100%");
+    infomaniac.log(window.document.getElementById("sidebar-content"));
 };
 
 // Initialize the sidebar for the first time, binding event handlers
@@ -20,8 +36,9 @@ infomaniac.SidebarView.prototype.bindUI = function() {
 
 // Update the sidebar to reflect the details for a new active page or tab.
 infomaniac.SidebarView.prototype.syncUI = function(page) {
-    infomaniac.followButton.syncUI(page);
-    infomaniac.tagList.syncUI(page);
+    infomaniac.log("Hi!");
+    // infomaniac.followButton.syncUI(page);
+    // infomaniac.tagList.syncUI(page);
 };
 
 // Respond to a page load event.

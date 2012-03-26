@@ -22,17 +22,65 @@
   <script src="chrome://infomaniac/content/entrypoint.js"
           type="application/javascript" />
 
-  <vbox flex="1">
-    <button id="follow-button" label="Follow"
-            oncommand="infomaniac.followButton.onClick();"
-            onmouseout="infomaniac.followButton.onMouseOut();"
-            onmouseover="infomaniac.followButton.onMouseOver();" />
-    <separator class="thin" />
-    <vbox id="page-info" />
-    <spacer flex="1" />
+  <vbox id="sidebar-container" flex="1">
+    <!-- <button id="follow-button" label="Follow" -->
+    <!--         oncommand="infomaniac.followButton.onClick();" -->
+    <!--         onmouseout="infomaniac.followButton.onMouseOut();" -->
+    <!--         onmouseover="infomaniac.followButton.onMouseOver();" /> -->
+    <!-- <separator class="thin" /> -->
+    <!-- <vbox id="page-info" /> -->
+
+    <vbox flex="1">
+      <iframe id="sidebar-content" name="table_frame" flex="1"
+              type="content" src="http://localhost:9400/index.html" />
+    </vbox>
+
+    <!-- <vbox id="page-info-mock"> -->
+    <!--   <hbox> -->
+    <!--     <hbox><image class="avatar" src="chrome://infomaniac/content/avatar.png" /></hbox> -->
+    <!--     <vbox> -->
+    <!--       <html:p class="header">infomaniac/follows</html:p> -->
+    <!--     </vbox> -->
+    <!--   </hbox> -->
+
+    <!--   <hbox> -->
+    <!--     <hbox><image class="avatar" src="chrome://infomaniac/content/avatar.png" /></hbox> -->
+    <!--     <vbox> -->
+    <!--       <html:p class="header">infomaniac/comment</html:p> -->
+
+    <!--       <html:p style="display: block;">Lorem ipsum dolor sit amet,<html:br/> -->
+    <!--       consectetur adipisicing elit, sed do eiusmod tempor<html:br/> -->
+    <!--       incididunt ut labore et dolore magna aliqua. Ut enim ad<html:br/> -->
+    <!--       minim veniam, quis nostrud exercitation ullamco laboris nisi<html:br/> -->
+    <!--       ut aliquip ex ea commodo consequat. Duis aute irure dolor in<html:br/> -->
+    <!--       reprehenderit in voluptate velit esse cillum dolore eu<html:br/> -->
+    <!--       fugiat nulla pariatur. Excepteur sint occaecat cupidatat non<html:br/> -->
+    <!--       proident, sunt in culpa qui officia deserunt mollit anim id<html:br/> -->
+    <!--       est laborum.</html:p> -->
+
+    <!--     </vbox> -->
+    <!--   </hbox> -->
+
+    <!--   <hbox> -->
+    <!--     <hbox><image class="avatar" src="chrome://infomaniac/content/avatar.png" /></hbox> -->
+    <!--     <vbox> -->
+    <!--       <html:p class="header">infomaniac/rating</html:p> -->
+    <!--       <html:p>5</html:p> -->
+    <!--     </vbox> -->
+    <!--   </hbox> -->
+
+    <!--   <hbox> -->
+    <!--     <hbox><image class="avatar" src="chrome://infomaniac/content/avatar.png" /></hbox> -->
+    <!--     <vbox> -->
+    <!--       <html:p class="header">jkakar/comment</html:p> -->
+    <!--       <html:p>stop scrolling please</html:p> -->
+    <!--     </vbox> -->
+    <!--   </hbox> -->
+    <!-- </vbox> -->
+
     <label id="link-to-fluidinfo"
            class="text-link"
-           value="More about this page on Fluidinfo..."
+           value="More about this page on Fluidinfo…"
            onclick="infomaniac.fluidinfoLink.onClick();" />
   </vbox>
 </sidebar>
