@@ -1,22 +1,6 @@
 // SidebarView handles the presentation details for the extension.
 infomaniac.SidebarView = function() {
     this.activeURL = undefined;
-
-    var vbox = window.document.getElementById("sidebar-container");
-    infomaniac.log("width: " + vbox.width);
-    infomaniac.log("height: " + vbox.height);
-    infomaniac.log("scrollHeight: " + vbox.scrollHeight);
-    infomaniac.log("scrollWidth: " + vbox.scrollWidth);
-
-
-    window.top.document.getElementById("sidebar-box").width = "230px";
-    var mainWindow = infomaniac.getMainWindow();
-    mainWindow.document.getElementById("sidebar-splitter").hidden = true;
-    window.top.document.getElementById("sidebar-box").style.borderRight = "1px solid #ebebeb";
-    infomaniac.log(window.document.getElementById("sidebar-content"));
-    // window.document.getElementById("sidebar-content").setAttribute("height", vbox.scrollHeight + "px");
-    // window.document.getElementById("sidebar-content").setAttribute("height", "100%");
-    infomaniac.log(window.document.getElementById("sidebar-content"));
 };
 
 // Initialize the sidebar for the first time, binding event handlers
@@ -28,17 +12,41 @@ infomaniac.SidebarView.prototype.bindUI = function() {
     // extension only unloads when the browser shuts down. -jkakar
     var browser = infomaniac.getMainWindow().gBrowser;
     browser.tabContainer.addEventListener(
-        "TabSelect", infomaniac.bind(this.onTabChange, this), false);
+        "TabSelect", infomaniac.bind(this.onTabChange, this));
     browser.addEventListener(
-        "DOMContentLoaded", infomaniac.bind(this.onPageLoad, this), false);
-    infomaniac.controller.sync(browser.contentDocument.location.href);
+        "DOMContentLoaded", infomaniac.bind(this.onPageLoad, this));
+
+    // Hide the splitter to ensure that the width of the sidebar is
+    // always what we set it to.
+    var mainWindow = infomaniac.getMainWindow();
+    var splitter = mainWindow.document.getElementById("sidebar-splitter");
+    splitter.hidden = true;
+
+    // Setup the sidebar.
+    var sidebar = window.top.document.getElementById("sidebar-box");
+    sidebar.width = "230px";
+    sidebar.style.borderRight = "1px solid #ebebeb";
+    sidebar.addEventListener("click", function(evt) {
+        // Intercept clicks on links and open them in the main tab.
+        if (evt.target.nodeName == "A") {
+            var document = mainWindow.gBrowser.contentDocument;
+            var link = encodeURIComponent(document.location.href);
+            mainWindow.gBrowser.selectedTab =
+                mainWindow.gBrowser.addTab(evt.target.getAttribute("href"));
+            evt.preventDefault();
+            evt.stopPropagation();
+        }
+    });
 };
 
 // Update the sidebar to reflect the details for a new active page or tab.
 infomaniac.SidebarView.prototype.syncUI = function(page) {
-    infomaniac.log("Hi!");
-    // infomaniac.followButton.syncUI(page);
-    // infomaniac.tagList.syncUI(page);
+    var mainWindow = infomaniac.getMainWindow();
+    var document = mainWindow.gBrowser.contentDocument;
+    var browser = window.document.getElementById("sidebar-content");
+    browser.contentDocument.location.href =
+        "http://localhost:9400/index.html?"
+        + encodeURIComponent(document.location.href);
 };
 
 // Respond to a page load event.
@@ -48,7 +56,7 @@ infomaniac.SidebarView.prototype.onPageLoad = function(evt) {
         var document = mainWindow.gBrowser.contentDocument;
         var currentURL = document.location.href;
         if (this.activeURL !== currentURL) {
-            infomaniac.controller.sync(document.location.href);
+            this.syncUI();
         }
         this.activeURL = currentURL;
     }
@@ -60,49 +68,7 @@ infomaniac.SidebarView.prototype.onTabChange = function() {
     var document = mainWindow.gBrowser.contentDocument;
     var currentURL = document.location.href;
     this.activeURL = currentURL;
-    infomaniac.controller.sync(currentURL);
-};
-
-
-// FollowButton encapsulates the logic needed to make the "Follow"
-// button interactive.
-infomaniac.FollowButton = function() {};
-
-// Respond to a click event.
-infomaniac.FollowButton.prototype.onClick = function() {
-    var mainWindow = infomaniac.getMainWindow();
-    var document = mainWindow.gBrowser.contentDocument;
-    var button = window.document.getElementById("follow-button");
-    var following = (button.label === "Following"
-                     || button.label === "Unfollow");
-    if (following) {
-        infomaniac.controller.unfollow(document.location.href);
-    } else {
-        infomaniac.controller.follow(document.location.href);
-    }
-};
-
-// Respond to a mouseover event.
-infomaniac.FollowButton.prototype.onMouseOver = function() {
-    var button = window.document.getElementById("follow-button");
-    if (button.label === "Following") {
-        button.label = "Unfollow";
-    }
-};
-
-// Respond to a mouseout event.
-infomaniac.FollowButton.prototype.onMouseOut = function() {
-    var button = window.document.getElementById("follow-button");
-    if (button.label === "Unfollow") {
-        button.label = "Following";
-    }
-};
-
-// Synchronize the user interface with the page state.
-infomaniac.FollowButton.prototype.syncUI = function(page) {
-    var following = page.tags["infomaniac/follows"] === null;
-    var button = window.document.getElementById("follow-button");
-    button.label = following ? "Following" : "Follow";
+    this.syncUI();
 };
 
 
@@ -116,83 +82,4 @@ infomaniac.FluidinfoLink.prototype.onClick = function() {
     var link = encodeURIComponent(document.location.href);
     var targetURL = 'https://fluidinfo.com/about/#!/' + link;
     mainWindow.gBrowser.selectedTab = mainWindow.gBrowser.addTab(targetURL);
-};
-
-
-// TagList displays and manages a list of tag/value pairs.
-infomaniac.TagList = function() {};
-
-// Synchronize the user interface with the page state.
-infomaniac.TagList.prototype.syncUI = function(page) {
-    var document = window.document;
-    var info = document.getElementById("page-info");
-    while (info.firstChild !== null) {
-        info.removeChild(info.firstChild);
-    }
-
-    var tagPaths = [];
-    for (var path in page.tags) {
-        tagPaths.push(path);
-    }
-    tagPaths.sort();
-
-    var renderer = new infomaniac.TagRenderer();
-    for (var i = 0; i < tagPaths.length; i++) {
-        var tagPath = tagPaths[i];
-        if (tagPath === "id" || tagPath == "fluiddb/about") {
-            continue;
-        }
-
-        var node = renderer.render(tagPath, page.tags[tagPath]);
-        var separator = document.createElement("separator");
-        separator.className = "thin";
-        info.appendChild(node);
-        info.appendChild(separator);
-    }
-};
-
-
-// TagRenderer creates DOM elements representing tag/value data.
-infomaniac.TagRenderer = function() {};
-
-// Render a tag/value and return the DOM element containing the
-// output.
-infomaniac.TagRenderer.prototype.render = function(path, value) {
-    var image = document.createElement("image");
-    image.validate = "always";
-    image.setAttribute("src", "chrome://infomaniac/content/avatar.png");
-    image.setAttribute("class", "avatar");
-
-    var avatar = document.createElement("hbox");
-    avatar.appendChild(image);
-
-    var tagName = document.createElement("html:p");
-    tagName.className = "header";
-    tagName.appendChild(document.createTextNode(path));
-
-    var tagValue = document.createElement("html:p");
-    tagValue.appendChild(document.createTextNode(value));
-    if (/^https?:\/\/[^\<\>]+$/i.test(value)) {
-        tagValue.setAttribute("class", "text-link");
-        tagValue.setAttribute("href", value);
-        tagValue.addEventListener("click", this.clickHandler, false);
-    }
-
-    var data = document.createElement("vbox");
-    data.appendChild(tagName);
-    data.appendChild(tagValue);
-
-    var node = document.createElement("hbox");
-    node.appendChild(avatar);
-    node.appendChild(data);
-    return node;
-};
-
-// Open a clicked link in a new tab and make it active.
-infomaniac.TagRenderer.prototype.clickHandler = function(evt) {
-    var browser = infomaniac.getMainWindow().gBrowser;
-    var value = evt.target.getAttribute("href");
-    browser.selectedTab = browser.addTab(value);
-    evt.preventDefault();
-    evt.stopPropagation();
 };
