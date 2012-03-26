@@ -16,16 +16,8 @@ infomaniac.SidebarView.prototype.bindUI = function() {
     browser.addEventListener(
         "DOMContentLoaded", infomaniac.bind(this.onPageLoad, this));
 
-    // Hide the splitter to ensure that the width of the sidebar is
-    // always what we set it to.
-    var mainWindow = infomaniac.getMainWindow();
-    var splitter = mainWindow.document.getElementById("sidebar-splitter");
-    splitter.hidden = true;
-
     // Setup the sidebar.
     var sidebar = window.top.document.getElementById("sidebar-box");
-    sidebar.width = "230px";
-    sidebar.style.borderRight = "1px solid #ebebeb";
     sidebar.addEventListener("click", function(evt) {
         // Intercept click events on links and open them in a new tab
         // in the main window.
