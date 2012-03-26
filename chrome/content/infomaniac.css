@@ -1,33 +1,10 @@
-@import url("chrome://global/skin/global.css");
-
 #sidebar-infomaniac {
     background: white;
     font-family: "sans-serif";
     font-size: 75%;
 }
 
-#sidebar-container {
-    max-width: 100px;
-}
-
 label.text-link, label.text-link:visited, label.text-link:hover {
     color: blue;
     text-decoration: none;
-}
-
-image.avatar {
-    height: 32px;
-    max-height: 32px;
-    width: 32px;
-    padding-left: 7px;
-}
-
-description {
-    max-width: 150px;
-}
-
-p {
-    color: red;
-    display: block;
-    overflow: auto;
 }

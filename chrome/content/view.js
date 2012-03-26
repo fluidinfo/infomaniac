@@ -27,7 +27,8 @@ infomaniac.SidebarView.prototype.bindUI = function() {
     sidebar.width = "230px";
     sidebar.style.borderRight = "1px solid #ebebeb";
     sidebar.addEventListener("click", function(evt) {
-        // Intercept clicks on links and open them in the main tab.
+        // Intercept click events on links and open them in a new tab
+        // in the main window.
         if (evt.target.nodeName == "A") {
             var document = mainWindow.gBrowser.contentDocument;
             var link = encodeURIComponent(document.location.href);
