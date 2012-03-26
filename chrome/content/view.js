@@ -1,11 +1,11 @@
-// SidebarView handles the presentation details for the extension.
-infomaniac.SidebarView = function() {
+// Sidebar handles the presentation details for the extension.
+infomaniac.Sidebar = function() {
     this.activeURL = undefined;
 };
 
 // Initialize the sidebar for the first time, binding event handlers
 // and performing any other setup that might be needed.
-infomaniac.SidebarView.prototype.bindUI = function() {
+infomaniac.Sidebar.prototype.bindUI = function() {
     // FIXME We probably ought to add an unbind function to unhook
     // these event handlers, but doing so is a bit awkward.  In
     // addition, the logic will probably never be used because the
@@ -21,7 +21,7 @@ infomaniac.SidebarView.prototype.bindUI = function() {
     sidebar.addEventListener("click", function(evt) {
         // Intercept click events on links and open them in a new tab
         // in the main window.
-        if (evt.target.nodeName == "A") {
+        if (evt.target.nodeName === "A") {
             var document = mainWindow.gBrowser.contentDocument;
             var link = encodeURIComponent(document.location.href);
             mainWindow.gBrowser.selectedTab =
@@ -33,7 +33,7 @@ infomaniac.SidebarView.prototype.bindUI = function() {
 };
 
 // Update the sidebar to reflect the details for a new active page or tab.
-infomaniac.SidebarView.prototype.syncUI = function(page) {
+infomaniac.Sidebar.prototype.syncUI = function(page) {
     var mainWindow = infomaniac.getMainWindow();
     var document = mainWindow.gBrowser.contentDocument;
     var browser = window.document.getElementById("sidebar-content");
@@ -43,7 +43,7 @@ infomaniac.SidebarView.prototype.syncUI = function(page) {
 };
 
 // Respond to a page load event.
-infomaniac.SidebarView.prototype.onPageLoad = function(evt) {
+infomaniac.Sidebar.prototype.onPageLoad = function(evt) {
     if (evt.originalTarget instanceof HTMLDocument) {
         var mainWindow = infomaniac.getMainWindow();
         var document = mainWindow.gBrowser.contentDocument;
@@ -56,7 +56,7 @@ infomaniac.SidebarView.prototype.onPageLoad = function(evt) {
 };
 
 // Respond to a tab change event.
-infomaniac.SidebarView.prototype.onTabChange = function() {
+infomaniac.Sidebar.prototype.onTabChange = function() {
     var mainWindow = infomaniac.getMainWindow();
     var document = mainWindow.gBrowser.contentDocument;
     var currentURL = document.location.href;
