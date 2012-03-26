@@ -1,4 +1,4 @@
-Infomanic is a Firefox extension for Fluidinfo.
+Infomaniac is a Firefox extension for Fluidinfo.
 
 
 Introduction
@@ -76,6 +76,8 @@ Further information
 There are a number of resources you'll need to have on hand to
 understand and modify the extension:
 
+- https://developer.mozilla.org/en/XUL_Tutorial provides a nice
+  introduction to XUL.
 - https://developer.mozilla.org/en/XUL_Reference provides a list of XUL
   elements with links to detailed API documentation for each one.
 - https://developer.mozilla.org/en/Code_snippets provides a list of

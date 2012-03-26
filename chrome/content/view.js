@@ -20,8 +20,8 @@ infomaniac.SidebarView.prototype.bindUI = function() {
 
 // Update the sidebar to reflect the details for a new active page or tab.
 infomaniac.SidebarView.prototype.syncUI = function(page) {
-    window.document.getElementById("current-url").value = page.url;
     infomaniac.followButton.syncUI(page);
+    infomaniac.tagList.syncUI(page);
 };
 
 // Respond to a page load event.
@@ -92,11 +92,90 @@ infomaniac.FollowButton.prototype.syncUI = function(page) {
 // FluidinfoLink provides a link to the object browser.
 infomaniac.FluidinfoLink = function() {};
 
-// Synchronize the user interface with the page state.
+// Open the object browser in a new tab and make it active.
 infomaniac.FluidinfoLink.prototype.onClick = function() {
     var mainWindow = infomaniac.getMainWindow();
     var document = mainWindow.gBrowser.contentDocument;
     var link = encodeURIComponent(document.location.href);
     var targetURL = 'https://fluidinfo.com/about/#!/' + link;
     mainWindow.gBrowser.selectedTab = mainWindow.gBrowser.addTab(targetURL);
+};
+
+
+// TagList displays and manages a list of tag/value pairs.
+infomaniac.TagList = function() {};
+
+// Synchronize the user interface with the page state.
+infomaniac.TagList.prototype.syncUI = function(page) {
+    var document = window.document;
+    var info = document.getElementById("page-info");
+    while (info.firstChild !== null) {
+        info.removeChild(info.firstChild);
+    }
+
+    var tagPaths = [];
+    for (var path in page.tags) {
+        tagPaths.push(path);
+    }
+    tagPaths.sort();
+
+    var renderer = new infomaniac.TagRenderer();
+    for (var i = 0; i < tagPaths.length; i++) {
+        var tagPath = tagPaths[i];
+        if (tagPath === "id" || tagPath == "fluiddb/about") {
+            continue;
+        }
+
+        var node = renderer.render(tagPath, page.tags[tagPath]);
+        var separator = document.createElement("separator");
+        separator.className = "thin";
+        info.appendChild(node);
+        info.appendChild(separator);
+    }
+};
+
+
+// TagRenderer creates DOM elements representing tag/value data.
+infomaniac.TagRenderer = function() {};
+
+// Render a tag/value and return the DOM element containing the
+// output.
+infomaniac.TagRenderer.prototype.render = function(path, value) {
+    var image = document.createElement("image");
+    image.validate = "always";
+    image.setAttribute("src", "chrome://infomaniac/content/avatar.png");
+    image.setAttribute("class", "avatar");
+
+    var avatar = document.createElement("hbox");
+    avatar.appendChild(image);
+
+    var tagName = document.createElement("html:p");
+    tagName.className = "header";
+    tagName.appendChild(document.createTextNode(path));
+
+    var tagValue = document.createElement("html:p");
+    tagValue.appendChild(document.createTextNode(value));
+    if (/^https?:\/\/[^\<\>]+$/i.test(value)) {
+        tagValue.setAttribute("class", "text-link");
+        tagValue.setAttribute("href", value);
+        tagValue.addEventListener("click", this.clickHandler, false);
+    }
+
+    var data = document.createElement("vbox");
+    data.appendChild(tagName);
+    data.appendChild(tagValue);
+
+    var node = document.createElement("hbox");
+    node.appendChild(avatar);
+    node.appendChild(data);
+    return node;
+};
+
+// Open a clicked link in a new tab and make it active.
+infomaniac.TagRenderer.prototype.clickHandler = function(evt) {
+    var browser = infomaniac.getMainWindow().gBrowser;
+    var value = evt.target.getAttribute("href");
+    browser.selectedTab = browser.addTab(value);
+    evt.preventDefault();
+    evt.stopPropagation();
 };

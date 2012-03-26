@@ -17,7 +17,17 @@ infomaniac.WebpageCollection.prototype.get = function(url, callback) {
     if (this.pages[url] !== undefined) {
         callback(this.pages[url]);
     } else {
-        this.client.getObject({about: url, select: ["infomaniac/follows"],
+        // FIXME Remove the 'select' parameter here when the GET /values
+        // changes to return all tag values are deployed. -jkakar.
+        this.client.getObject({about: url, select: ["infomaniac/follows",
+                                                    "infomaniac/muppet",
+                                                    "infomaniac/link",
+                                                    "infomaniac/comment",
+                                                    "infomaniac/https-link",
+                                                    "infomaniac/like",
+                                                    "infomaniac/search-engine",
+                                                    "infomaniac/something",
+                                                    "fluiddb/about"],
                                onSuccess: infomaniac.bind(succeeded, this)});
     }
 };

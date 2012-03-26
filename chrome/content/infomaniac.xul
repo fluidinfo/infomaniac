@@ -5,7 +5,8 @@
 <!DOCTYPE sidebar SYSTEM "chrome://infomaniac/locale/infomaniac.dtd">
 
 <sidebar id="sidebar-infomaniac" title="&infomaniac.title;"
-         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul" >
+         xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
+         xmlns:html="http://www.w3.org/1999/xhtml">
   <script src="chrome://infomaniac/content/fluidinfo.js"
           type="application/javascript" />
   <script src="chrome://infomaniac/content/infomaniac.js"
@@ -26,7 +27,8 @@
             oncommand="infomaniac.followButton.onClick();"
             onmouseout="infomaniac.followButton.onMouseOut();"
             onmouseover="infomaniac.followButton.onMouseOver();" />
-    <label id="current-url" />
+    <separator class="thin" />
+    <vbox id="page-info" />
     <spacer flex="1" />
     <label id="link-to-fluidinfo"
            class="text-link"
