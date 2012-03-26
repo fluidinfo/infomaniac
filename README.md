@@ -7,7 +7,10 @@ Introduction
 Infomaniac is a Firefox extension that makes it easy to follow web
 pages, see the info other people have stored and to add one's own info
 about them.  The extension adds a sidebar to the browser and, as such,
-must be XUL-based.
+must be XUL-based.  The sidebar contains a `browser` XUL element which
+displays a mini-object browser served from `fluidinfo.com`.  As the
+user changes tabs and pages the sidebar is updated to show the
+relevant content.
 
 
 Development and testing

@@ -7,32 +7,23 @@
 <sidebar id="sidebar-infomaniac" title="&infomaniac.title;"
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul"
          xmlns:html="http://www.w3.org/1999/xhtml">
-  <script src="chrome://infomaniac/content/fluidinfo.js"
-          type="application/javascript" />
   <script src="chrome://infomaniac/content/infomaniac.js"
           type="application/javascript" />
   <script src="chrome://infomaniac/content/browser.js"
           type="application/javascript" />
-  <script src="chrome://infomaniac/content/model.js"
-          type="application/javascript" />
   <script src="chrome://infomaniac/content/view.js"
-          type="application/javascript" />
-  <script src="chrome://infomaniac/content/controller.js"
           type="application/javascript" />
   <script src="chrome://infomaniac/content/entrypoint.js"
           type="application/javascript" />
 
-  <vbox flex="1">
-    <button id="follow-button" label="Follow"
-            oncommand="infomaniac.followButton.onClick();"
-            onmouseout="infomaniac.followButton.onMouseOut();"
-            onmouseover="infomaniac.followButton.onMouseOver();" />
-    <separator class="thin" />
-    <vbox id="page-info" />
-    <spacer flex="1" />
+  <vbox id="sidebar-container" flex="1">
+    <vbox flex="1">
+      <iframe id="sidebar-content" name="table_frame" flex="1" type="content" />
+    </vbox>
+
     <label id="link-to-fluidinfo"
            class="text-link"
-           value="More about this page on Fluidinfo..."
+           value="More on Fluidinfo…"
            onclick="infomaniac.fluidinfoLink.onClick();" />
   </vbox>
 </sidebar>
