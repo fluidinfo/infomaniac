@@ -38,8 +38,7 @@ infomaniac.Sidebar.prototype.syncUI = function(page) {
     var document = mainWindow.gBrowser.contentDocument;
     var browser = window.document.getElementById("sidebar-content");
     browser.contentDocument.location.href =
-        "http://localhost:9400/index.html?"
-        + encodeURIComponent(document.location.href);
+        "http://localhost:8000/infomaniac/" + document.location.href;
 };
 
 // Respond to a page load event.
@@ -76,3 +75,14 @@ infomaniac.FluidinfoLink.prototype.onClick = function() {
     var targetURL = 'https://fluidinfo.com/about/#!/' + link;
     mainWindow.gBrowser.selectedTab = mainWindow.gBrowser.addTab(targetURL);
 };
+
+
+// Initialize the extension.
+infomaniac.load = function() {
+    infomaniac.fluidinfoLink = new infomaniac.FluidinfoLink();
+    infomaniac.sidebar = new infomaniac.Sidebar();
+    infomaniac.sidebar.bindUI();
+    infomaniac.sidebar.syncUI();
+};
+
+window.addEventListener("load", infomaniac.load);
