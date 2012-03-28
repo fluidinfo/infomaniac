@@ -1,3 +1,9 @@
+@import url("chrome://global/skin/global.css");
+
+sidebarheader {
+    display: none;
+}
+
 #sidebar-infomaniac {
     background: white;
     font-family: "sans-serif";
