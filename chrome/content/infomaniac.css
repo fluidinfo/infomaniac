@@ -7,10 +7,17 @@ sidebarheader {
 #sidebar-infomaniac {
     background: white;
     font-family: "sans-serif";
-    font-size: 75%;
+    font-size: 80%;
 }
 
 label.text-link, label.text-link:visited, label.text-link:hover {
-    color: blue;
+    color: #0088cc;
+    font-family: 'Varela Round', sans-serif;
     text-decoration: none;
+    padding: 0;
+    margin: 4px;
+}
+
+label.text-link:hover {
+    color: #005580;
 }
