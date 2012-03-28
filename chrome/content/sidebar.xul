@@ -1,7 +1,4 @@
 <?xml version="1.0"?>
-<?xml-stylesheet href="chrome://browser/skin/browser.css" type="text/css" ?>
-<?xml-stylesheet href="chrome://global/skin/xul.css" type="text/css" ?>
-<?xml-stylesheet href="chrome://infomaniac/content/infomaniac.css" type="text/css" ?>
 <!DOCTYPE sidebar SYSTEM "chrome://infomaniac/locale/infomaniac.dtd">
 
 <sidebar id="sidebar-infomaniac" title="&infomaniac.title;"
@@ -11,9 +8,7 @@
           type="application/javascript" />
   <script src="chrome://infomaniac/content/browser.js"
           type="application/javascript" />
-  <script src="chrome://infomaniac/content/view.js"
-          type="application/javascript" />
-  <script src="chrome://infomaniac/content/entrypoint.js"
+  <script src="chrome://infomaniac/content/sidebar.js"
           type="application/javascript" />
 
   <vbox id="sidebar-container" flex="1">
