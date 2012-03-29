@@ -78,7 +78,9 @@ Making a new release
 
 Create a `.xpi` file:
 
-    zip -r infomaniac.xpi chrome chrome.manifest install.rdf
+    make
+
+This will create an `infomaniac.xpi` file that's ready to deploy.
 
 
 Further information
