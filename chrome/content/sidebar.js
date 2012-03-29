@@ -38,8 +38,9 @@ infomaniac.Sidebar.prototype.syncUI = function(page) {
     var mainWindow = infomaniac.getMainWindow();
     var document = mainWindow.gBrowser.contentDocument;
     var browser = window.document.getElementById("sidebar-content");
+    var link = encodeURIComponent(document.location.href);
     browser.contentDocument.location.href =
-        "http://new.fluidinfo.com/infomaniac/" + document.location.href;
+        "http://new.fluidinfo.com/infomaniac/" + link;
 };
 
 // Respond to a page load event.
