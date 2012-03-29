@@ -73,16 +73,30 @@ these pages:
 - https://developer.mozilla.org/en/Code_snippets/On_page_load
 
 
+Making a new release
+--------------------
+
+Create a `.xpi` file:
+
+    make
+
+This will create an `infomaniac.xpi` file that's ready to deploy.
+
+
 Further information
 -------------------
 
 There are a number of resources you'll need to have on hand to
 understand and modify the extension:
 
-- https://developer.mozilla.org/en/XUL_Tutorial provides a nice
+- https://developer.mozilla.org/en/XUL_tutorial provides a nice
   introduction to XUL.
-- https://developer.mozilla.org/en/XUL_Reference provides a list of XUL
+- https://developer.mozilla.org/en/XUL_reference provides a list of XUL
   elements with links to detailed API documentation for each one.
 - https://developer.mozilla.org/en/Code_snippets provides a list of
   examples, nicely organized by topic, which are indispensable when
   learning how to perform basic (and not-so-basic) tasks.
+- https://developer.mozilla.org/en/Extension_packaging provides
+  instructions for making an XPI.  It also has some information about
+  how to install the extension directly and serve the file correctly
+  from a web server.
