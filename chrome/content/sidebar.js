@@ -22,6 +22,7 @@ infomaniac.Sidebar.prototype.bindUI = function() {
         // Intercept click events on links and open them in a new tab
         // in the main window.
         if (evt.target.nodeName === "A") {
+            var mainWindow = infomaniac.getMainWindow();
             var document = mainWindow.gBrowser.contentDocument;
             var link = encodeURIComponent(document.location.href);
             mainWindow.gBrowser.selectedTab =
