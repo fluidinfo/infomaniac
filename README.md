@@ -73,6 +73,21 @@ these pages:
 - https://developer.mozilla.org/en/Code_snippets/On_page_load
 
 
+Setting the root URL
+--------------------
+
+The root URL, used to fetch the extension content, is stored in the
+`extensions.infomaniac.rootURL` preference.  Preferences are described
+in some detail here:
+
+  https://developer.mozilla.org/en/Code_snippets/Preferences
+
+The default can be overridden by opening `about:config` and setting a
+new endpoint.  It's quite useful to use a browser profile just for
+development, as described above, with the root URL set to a local
+instance of `fluidinfo.com`.
+
+
 Making a new release
 --------------------
 
