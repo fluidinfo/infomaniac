@@ -23,8 +23,6 @@ infomaniac.Sidebar.prototype.bindUI = function() {
         // in the main window.
         if (evt.target.nodeName === "A") {
             var mainWindow = infomaniac.getMainWindow();
-            var document = mainWindow.gBrowser.contentDocument;
-            var link = encodeURIComponent(document.location.href);
             mainWindow.gBrowser.selectedTab =
                 mainWindow.gBrowser.addTab(evt.target.getAttribute("href"));
             evt.preventDefault();
@@ -35,12 +33,16 @@ infomaniac.Sidebar.prototype.bindUI = function() {
 
 // Update the sidebar to reflect the details for a new active page or tab.
 infomaniac.Sidebar.prototype.syncUI = function(page) {
+    var preferences = Components
+        .classes["@mozilla.org/preferences-service;1"]
+        .getService(Components.interfaces.nsIPrefService)
+        .getBranch("extensions.infomaniac.");
+    var rootURL = preferences.getCharPref("rootURL");
     var mainWindow = infomaniac.getMainWindow();
     var document = mainWindow.gBrowser.contentDocument;
     var browser = window.document.getElementById("sidebar-content");
-    var link = encodeURIComponent(document.location.href);
-    browser.contentDocument.location.href =
-        "http://new.fluidinfo.com/infomaniac/" + link;
+    var about = encodeURIComponent(document.location.href);
+    browser.contentDocument.location.href = rootURL + about;
 };
 
 // Respond to a page load event.
@@ -73,9 +75,9 @@ infomaniac.FluidinfoLink = function() {};
 infomaniac.FluidinfoLink.prototype.onClick = function() {
     var mainWindow = infomaniac.getMainWindow();
     var document = mainWindow.gBrowser.contentDocument;
-    var link = encodeURIComponent(document.location.href);
-    var targetURL = 'https://fluidinfo.com/about/#!/' + link;
-    mainWindow.gBrowser.selectedTab = mainWindow.gBrowser.addTab(targetURL);
+    var about = encodeURIComponent(document.location.href);
+    var url = 'https://fluidinfo.com/about/#!/' + about;
+    mainWindow.gBrowser.selectedTab = mainWindow.gBrowser.addTab(url);
 };
 
 
