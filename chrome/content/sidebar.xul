@@ -19,10 +19,5 @@
     <vbox flex="1">
       <iframe id="sidebar-content" name="table_frame" flex="1" type="content" />
     </vbox>
-
-    <label id="link-to-fluidinfo"
-           class="text-link"
-           value="More on Fluidinfo…"
-           onclick="infomaniac.fluidinfoLink.onClick();" />
   </vbox>
 </sidebar>
