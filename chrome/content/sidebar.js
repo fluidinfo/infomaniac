@@ -68,22 +68,8 @@ infomaniac.Sidebar.prototype.onTabChange = function() {
 };
 
 
-// FluidinfoLink provides a link to the object browser.
-infomaniac.FluidinfoLink = function() {};
-
-// Open the object browser in a new tab and make it active.
-infomaniac.FluidinfoLink.prototype.onClick = function() {
-    var mainWindow = infomaniac.getMainWindow();
-    var document = mainWindow.gBrowser.contentDocument;
-    var about = encodeURIComponent(document.location.href);
-    var url = 'https://fluidinfo.com/about/#!/' + about;
-    mainWindow.gBrowser.selectedTab = mainWindow.gBrowser.addTab(url);
-};
-
-
 // Initialize the extension.
 infomaniac.load = function() {
-    infomaniac.fluidinfoLink = new infomaniac.FluidinfoLink();
     infomaniac.sidebar = new infomaniac.Sidebar();
     infomaniac.sidebar.bindUI();
     infomaniac.sidebar.syncUI();
