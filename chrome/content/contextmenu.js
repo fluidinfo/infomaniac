@@ -5,7 +5,12 @@ infomaniac.FluidinfoLink = function() {};
 infomaniac.FluidinfoLink.prototype.onClick = function() {
     var document = window.gBrowser.contentDocument;
     var link = encodeURIComponent(document.location.href);
-    var targetURL = 'https://fluidinfo.com/about/#!/' + link;
+    var preferences = Components
+        .classes["@mozilla.org/preferences-service;1"]
+        .getService(Components.interfaces.nsIPrefService)
+        .getBranch("extensions.infomaniac.");
+    var rootURL = preferences.getCharPref("rootURL");
+    var targetURL = rootURL + 'about/' + link;
     window.gBrowser.selectedTab = window.gBrowser.addTab(targetURL);
 };
 
