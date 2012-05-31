@@ -1,6 +1,6 @@
 // Sidebar handles the presentation details for the extension.
 infomaniac.Sidebar = function() {
-    this.activeURL = undefined;
+    this.activeObject = undefined;
 };
 
 // Initialize the sidebar for the first time, binding event handlers
@@ -29,6 +29,11 @@ infomaniac.Sidebar.prototype.bindUI = function() {
             evt.stopPropagation();
         }
     });
+
+    var that = this;
+    infomaniac.getMainWindow().addEventListener("mouseup", function (evt) {
+        that.onSelection();
+    });
 };
 
 // Update the sidebar to reflect the details for a new active page or tab.
@@ -41,7 +46,7 @@ infomaniac.Sidebar.prototype.syncUI = function(page) {
     var mainWindow = infomaniac.getMainWindow();
     var document = mainWindow.gBrowser.contentDocument;
     var browser = window.document.getElementById("sidebar-content");
-    var about = encodeURIComponent(document.location.href);
+    about = encodeURIComponent(this.activeObject || document.location.href);
     browser.contentDocument.location.href = rootURL + about;
 };
 
@@ -51,10 +56,10 @@ infomaniac.Sidebar.prototype.onPageLoad = function(evt) {
         var mainWindow = infomaniac.getMainWindow();
         var document = mainWindow.gBrowser.contentDocument;
         var currentURL = document.location.href;
-        if (this.activeURL !== currentURL) {
+        if (this.activeObject !== currentURL) {
+            this.activeObject = currentURL;
             this.syncUI();
         }
-        this.activeURL = currentURL;
     }
 };
 
@@ -63,10 +68,19 @@ infomaniac.Sidebar.prototype.onTabChange = function() {
     var mainWindow = infomaniac.getMainWindow();
     var document = mainWindow.gBrowser.contentDocument;
     var currentURL = document.location.href;
-    this.activeURL = currentURL;
+    this.activeObject = currentURL;
     this.syncUI();
 };
 
+// Respond to a selection event.
+infomaniac.Sidebar.prototype.onSelection = function() {
+    var contentWindow = infomaniac.getMainWindow().gBrowser.contentWindow;
+    var selection = contentWindow.getSelection().toString();
+    if (selection && selection !== this.activeObject) {
+        this.activeObject = selection;
+        this.syncUI();
+    }
+};
 
 // Initialize the extension.
 infomaniac.load = function() {
@@ -76,3 +90,5 @@ infomaniac.load = function() {
 };
 
 window.addEventListener("load", infomaniac.load);
+
+
