@@ -1,1 +1,1 @@
-pref('extensions.infomaniac.rootURL', 'http://fluidinfo.com/infomaniac/');
+pref('extensions.infomaniac.rootURL', 'http://new.fluidinfo.com/infomaniac/');
