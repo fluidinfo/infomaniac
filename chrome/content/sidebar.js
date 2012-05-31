@@ -76,8 +76,8 @@ infomaniac.Sidebar.prototype.onTabChange = function() {
 // Respond to a selection event.
 infomaniac.Sidebar.prototype.onSelection = function() {
     var contentWindow = infomaniac.getMainWindow().gBrowser.contentWindow;
-    var selection = contentWindow.getSelection().toString();
-    if (selection && selection !== this.activeObject) {
+    var selection = contentWindow.getSelection().toString() || null;
+    if (selection !== this.activeObject) {
         this.activeObject = selection;
         this.syncUI();
     }
