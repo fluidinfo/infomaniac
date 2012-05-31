@@ -46,7 +46,8 @@ infomaniac.Sidebar.prototype.syncUI = function(page) {
     var mainWindow = infomaniac.getMainWindow();
     var document = mainWindow.gBrowser.contentDocument;
     var browser = window.document.getElementById("sidebar-content");
-    about = encodeURIComponent(this.activeObject || document.location.href);
+    var about = this.activeObject || document.location.href;
+    about = encodeURIComponent(about);
     browser.contentDocument.location.href = rootURL + about;
 };
 
@@ -90,5 +91,3 @@ infomaniac.load = function() {
 };
 
 window.addEventListener("load", infomaniac.load);
-
-
