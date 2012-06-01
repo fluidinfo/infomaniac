@@ -20,7 +20,7 @@ infomaniac.Sidebar.prototype.bindUI = function() {
     // Setup the sidebar.
     var sidebar = window.top.document.getElementById("sidebar-box");
     sidebar.addEventListener("click", function(evt) {
-        // Ignore left clicks
+        // Ignore right clicks
         if (evt.button === 2) {
             return;
         }

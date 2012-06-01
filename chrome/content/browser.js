@@ -9,6 +9,7 @@ infomaniac.getMainWindow = function() {
         .getInterface(interfaces.nsIDOMWindow);
 };
 
+// Return the global preferences object.
 infomaniac.getPreferences = function() {
     return Components
         .classes["@mozilla.org/preferences-service;1"]
