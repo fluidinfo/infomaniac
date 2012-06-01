@@ -1,16 +1,17 @@
 // Sidebar handles the presentation details for the extension.
 infomaniac.Sidebar = function() {
-    this.activeURL = undefined;
+    this.activeObject = undefined;
 };
 
 // Initialize the sidebar for the first time, binding event handlers
 // and performing any other setup that might be needed.
 infomaniac.Sidebar.prototype.bindUI = function() {
+    var mainWindow = infomaniac.getMainWindow();
     // FIXME We probably ought to add an unbind function to unhook
     // these event handlers, but doing so is a bit awkward.  In
     // addition, the logic will probably never be used because the
     // extension only unloads when the browser shuts down. -jkakar
-    var browser = infomaniac.getMainWindow().gBrowser;
+    var browser = mainWindow.gBrowser;
     browser.tabContainer.addEventListener(
         "TabSelect", infomaniac.bind(this.onTabChange, this));
     browser.addEventListener(
@@ -29,6 +30,10 @@ infomaniac.Sidebar.prototype.bindUI = function() {
             evt.stopPropagation();
         }
     });
+
+    var selectionCallback = infomaniac.bind(this.onSelection, this);
+    mainWindow.addEventListener("mouseup", selectionCallback);
+    mainWindow.addEventListener("keyup", selectionCallback);
 };
 
 // Update the sidebar to reflect the details for a new active page or tab.
@@ -41,7 +46,8 @@ infomaniac.Sidebar.prototype.syncUI = function(page) {
     var mainWindow = infomaniac.getMainWindow();
     var document = mainWindow.gBrowser.contentDocument;
     var browser = window.document.getElementById("sidebar-content");
-    var about = encodeURIComponent(document.location.href);
+    var about = this.activeObject || document.location.href;
+    about = encodeURIComponent(about);
     browser.contentDocument.location.href = rootURL + about;
 };
 
@@ -51,10 +57,10 @@ infomaniac.Sidebar.prototype.onPageLoad = function(evt) {
         var mainWindow = infomaniac.getMainWindow();
         var document = mainWindow.gBrowser.contentDocument;
         var currentURL = document.location.href;
-        if (this.activeURL !== currentURL) {
+        if (this.activeObject !== currentURL) {
+            this.activeObject = currentURL;
             this.syncUI();
         }
-        this.activeURL = currentURL;
     }
 };
 
@@ -63,10 +69,19 @@ infomaniac.Sidebar.prototype.onTabChange = function() {
     var mainWindow = infomaniac.getMainWindow();
     var document = mainWindow.gBrowser.contentDocument;
     var currentURL = document.location.href;
-    this.activeURL = currentURL;
+    this.activeObject = currentURL;
     this.syncUI();
 };
 
+// Respond to a selection event.
+infomaniac.Sidebar.prototype.onSelection = function() {
+    var contentWindow = infomaniac.getMainWindow().gBrowser.contentWindow;
+    var selection = contentWindow.getSelection().toString() || null;
+    if (selection !== this.activeObject) {
+        this.activeObject = selection;
+        this.syncUI();
+    }
+};
 
 // Initialize the extension.
 infomaniac.load = function() {
