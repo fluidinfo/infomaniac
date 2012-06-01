@@ -20,14 +20,21 @@ infomaniac.Sidebar.prototype.bindUI = function() {
     // Setup the sidebar.
     var sidebar = window.top.document.getElementById("sidebar-box");
     sidebar.addEventListener("click", function(evt) {
+        // Ignore left clicks
+        if (evt.button === 2) {
+            return;
+        }
+
+        var target = evt.target
+
+        if (target.nodeName == "IMG" && target.parentElement) {
+            target = target.parentElement;
+        }
+
         // Intercept click events on links and open them in a new tab
         // in the main window.
-        if (evt.target.nodeName === "A") {
-            var mainWindow = infomaniac.getMainWindow();
-            mainWindow.gBrowser.selectedTab =
-                mainWindow.gBrowser.addTab(evt.target.getAttribute("href"));
-            evt.preventDefault();
-            evt.stopPropagation();
+        if (target.nodeName === "A") {
+            target.setAttribute("target", "_blank");
         }
     });
 
@@ -38,11 +45,7 @@ infomaniac.Sidebar.prototype.bindUI = function() {
 
 // Update the sidebar to reflect the details for a new active page or tab.
 infomaniac.Sidebar.prototype.syncUI = function(page) {
-    var preferences = Components
-        .classes["@mozilla.org/preferences-service;1"]
-        .getService(Components.interfaces.nsIPrefService)
-        .getBranch("extensions.infomaniac.");
-    var rootURL = preferences.getCharPref("rootURL");
+    var rootURL = infomaniac.getPreferences().getCharPref("rootURL");
     var mainWindow = infomaniac.getMainWindow();
     var document = mainWindow.gBrowser.contentDocument;
     var browser = window.document.getElementById("sidebar-content");

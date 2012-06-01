@@ -9,6 +9,13 @@ infomaniac.getMainWindow = function() {
         .getInterface(interfaces.nsIDOMWindow);
 };
 
+infomaniac.getPreferences = function() {
+    return Components
+        .classes["@mozilla.org/preferences-service;1"]
+        .getService(Components.interfaces.nsIPrefService)
+        .getBranch("extensions.infomaniac.");
+};
+
 // Get a function that will run a callback with a specific context.
 infomaniac.bind = function(callback, context) {
     return function() {
