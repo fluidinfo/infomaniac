@@ -34,7 +34,7 @@ infomaniac.Sidebar.prototype.bindUI = function() {
         // Intercept click events on links and open them in a new tab
         // in the main window.
         if (target.nodeName === "A") {
-            target.setAttribute("target", "_blank");
+            target.setAttribute("target", "_content");
         }
     });
 
