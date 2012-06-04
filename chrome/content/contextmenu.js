@@ -5,21 +5,18 @@ infomaniac.FluidinfoLink = function() {};
 infomaniac.FluidinfoLink.prototype.onClick = function() {
     var document = window.gBrowser.contentDocument;
     var link = encodeURIComponent(document.location.href);
-    var preferences = Components
-        .classes["@mozilla.org/preferences-service;1"]
-        .getService(Components.interfaces.nsIPrefService)
-        .getBranch("extensions.infomaniac.");
-    var rootURL = preferences.getCharPref("rootURL");
+    var rootURL = infomaniac.getPreferences().getCharPref("rootURL");
     var targetURL = rootURL + 'about/' + link;
     window.gBrowser.selectedTab = window.gBrowser.addTab(targetURL);
 };
 
 
 // Initialize the extension.
-infomaniac.load = function() {
+infomaniac.load = function(event) {
+    console.log(event);
     if (infomaniac.contextLink === undefined) {
         infomaniac.contextLink = new infomaniac.FluidinfoLink();
     }
 };
 
-window.addEventListener("popupshowing", infomaniac.load);
+window.addEventListener("contextmenu", infomaniac.load);

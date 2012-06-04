@@ -88,6 +88,7 @@ infomaniac.Sidebar.prototype.onSelection = function() {
 
 // Initialize the extension.
 infomaniac.load = function() {
+    console.log('loaded');
     infomaniac.sidebar = new infomaniac.Sidebar();
     infomaniac.sidebar.bindUI();
     infomaniac.sidebar.syncUI();

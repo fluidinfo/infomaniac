@@ -33,9 +33,6 @@ You need to restart the browser whenever you make a change to the
 extension logic before it will be visible.  When the browser is
 running install the Firebug extension.
 
-You'll need to use the `Firebug.Console` object to write messages to the log;
-calls to `console.log` succeed but the messages disappear into a blackhole.
-
 When you use Firebug for the first time click on the little box next
 to "Console" to enable it.  Then click on the little menu arrow beside
 "Console" and turn on the following options:
