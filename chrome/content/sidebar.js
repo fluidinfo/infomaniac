@@ -12,10 +12,10 @@ infomaniac.Sidebar.prototype.bindUI = function() {
     // addition, the logic will probably never be used because the
     // extension only unloads when the browser shuts down. -jkakar
     var browser = mainWindow.gBrowser;
-    browser.tabContainer.addEventListener(
-        "TabSelect", infomaniac.bind(this.onTabChange, this));
-    browser.addEventListener(
-        "DOMContentLoaded", infomaniac.bind(this.onPageLoad, this));
+    infomaniac.addListener(browser.tabContainer, "TabSelect",
+                           infomaniac.bind(this.onTabChange, this));
+    infomaniac.addListener(browser, "DOMContentLoaded",
+                           infomaniac.bind(this.onPageLoad, this));
 
     // Setup the sidebar.
     var sidebar = window.top.document.getElementById("sidebar-box");
@@ -39,8 +39,8 @@ infomaniac.Sidebar.prototype.bindUI = function() {
     });
 
     var selectionCallback = infomaniac.bind(this.onSelection, this);
-    mainWindow.addEventListener("mouseup", selectionCallback);
-    mainWindow.addEventListener("keyup", selectionCallback);
+    infomaniac.addListener(mainWindow, "mouseup", selectionCallback);
+    infomaniac.addListener(mainWindow, "keyup", selectionCallback);
 };
 
 // Update the sidebar to reflect the details for a new active page or tab.
@@ -94,3 +94,4 @@ infomaniac.load = function() {
 };
 
 window.addEventListener("load", infomaniac.load);
+window.addEventListener("unload", infomaniac.removeAllListeners);
