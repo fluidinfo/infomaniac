@@ -8,6 +8,8 @@
          xmlns="http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul">
   <script src="chrome://infomaniac/content/infomaniac.js"
           type="application/javascript" />
+  <script src="chrome://infomaniac/content/browser.js"
+          type="application/javascript" />
   <script src="chrome://infomaniac/content/contextmenu.js"
           type="application/javascript" />
 
