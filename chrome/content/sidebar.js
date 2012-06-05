@@ -51,7 +51,7 @@ infomaniac.Sidebar.prototype.syncUI = function(page) {
     var browser = window.document.getElementById("sidebar-content");
     var about = this.activeObject || document.location.href;
     about = encodeURIComponent(about);
-    browser.contentDocument.location.href = rootURL + about;
+    browser.contentDocument.location.href = rootURL + 'infomaniac/' + about;
 };
 
 // Respond to a page load event.
