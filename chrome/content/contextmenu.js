@@ -11,8 +11,7 @@ infomaniac.FluidinfoLink.prototype.onClick = function() {
     if (this.target === null) {
         var document = window.gBrowser.contentDocument;
         var about = document.location.href;
-    }
-    else {
+    } else {
         about = this.target;
     }
 
@@ -37,13 +36,11 @@ infomaniac.load = function(event) {
     if (target) {
         if (infomaniac.HASHTAG_REGEX.test(target.text)) {
             infomaniac.contextLink.target = target.text
-        }
-        else {
+        } else {
             var url = target.href
             infomaniac.contextLink.target = url;
         }
-    }
-    else {
+    } else {
         infomaniac.contextLink.target = null;
     }
 };
