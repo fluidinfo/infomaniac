@@ -23,7 +23,7 @@ runs:
   https://developer.mozilla.org/en/Setting_up_extension_development_environment
 
 When that's done put a file in `~/.mozilla/firefox/<profile>/extensions`
-called `infomaniac@fluidinfo.com` with a single line containing the
+called `jid1-AiwVfZ6h5L6xsQ@jetpack` with a single line containing the
 path to this repository.  Start Firefox and hit `Ctrl-Shift-f` to see
 the extension in action:
 
