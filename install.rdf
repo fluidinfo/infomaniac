@@ -3,7 +3,8 @@
 <RDF xmlns="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
      xmlns:em="http://www.mozilla.org/2004/em-rdf#">
   <Description about="urn:mozilla:install-manifest">
-    <em:id>infomaniac@fluidinfo.com</em:id>
+    <em:type>2</em:type>
+    <em:id>jid1-AiwVfZ6h5L6xsQ@jetpack</em:id>
     <em:name>Fluidinfo</em:name>
     <em:version>1.2</em:version>
     <em:creator>Jamu Kakar</em:creator>
