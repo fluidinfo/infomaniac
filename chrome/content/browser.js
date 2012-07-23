@@ -44,12 +44,12 @@ infomaniac.removeAllListeners = function() {
     infomaniac._listeners = [];
 };
 
+
 // If we don't have a firebug console use the one in MainWindow.
-window.addEventListener("load", function () {
-    if (window.Firebug === undefined) {
-        window.console = infomaniac.getMainWindow().Firebug.Console;
-    }
-    else {
-        window.console = window.Firebug.Console;
-    }
-});
+// window.addEventListener("load", function () {
+//     if (window.Firebug === undefined) {
+//         window.console = infomaniac.getMainWindow().Firebug.Console;
+//     } else {
+//         window.console = window.Firebug.Console;
+//     }
+// });
