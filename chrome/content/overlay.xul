@@ -18,7 +18,7 @@
   </menupopup>
 
   <popup id="contentAreaContextMenu">
-    <menuitem label="More on Fluidinfo…"
+    <menuitem label="More on loveme.do…"
               oncommand="infomaniac.contextLink.onClick();" />
   </popup>
 
